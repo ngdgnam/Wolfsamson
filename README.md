@@ -3,3 +3,6 @@
  - Có lấy thì mn mang về fĩx lại nhé 
  - Hoạc em lấy của người khác mod lại
 # Mình là newbie , có gì sai xót hay không đúng mong mọi người góp ý ạ . cảm ơn !
+-----21/10/2025-----
+-npm.js
+-giveaway.js
