@@ -9,5 +9,5 @@ _____21/10/2025_____
  - aichat.js
 
 _____22/10/2025_____
- - effect.js 
-   
+ - effect.js
+ - story.js
