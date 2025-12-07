@@ -7,7 +7,7 @@ module.exports.config = {
   version: "3.1.0",
   hasPermssion: 3,
   credits: "WolfBot Team",  //Thay cre làm chó nhé các tình yêu
-  description: "Console kiểu bảng đẹp, chống spam, không thơ",
+  description: "Console kiểu bảng đẹp, chống spam",
   commandCategory: "Admin",
   usages: "",
   cooldowns: 0
