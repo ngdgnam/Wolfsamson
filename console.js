@@ -4,34 +4,34 @@ const moment = require('moment-timezone');
 
 module.exports.config = {
   name: "console",
-  version: "3.0.0",
+  version: "3.1.0",
   hasPermssion: 3,
-  credits: "WolfBot Team", //thay cre lam cho nhe
-  description: "Console kiểu khung, chống spam, lưu log",
+  credits: "WolfBot Team",  //Thay cre làm chó nhé các tình yêu
+  description: "Console kiểu bảng đẹp, chống spam, không thơ",
   commandCategory: "Admin",
   usages: "",
   cooldowns: 0
 };
 
-// ====== BIẾN CHUNG ======
-let isBlocked = false;            // Chế độ tắt console tạm thời khi spam  
-let spamCount = {};               // Đếm spam theo group  
-let LOG_BLOCK_TIME = 20000;       // 20 giây tắt console khi spam  
-let SPAM_LIMIT = 15;              // 15 tin / 3s → spam  
-let SPAM_WINDOW = 3000;           // 3 giây
+// ====== Biến chống spam ======
+let isBlocked = false;
+let spamCount = {};
+const SPAM_LIMIT = 15;        // 15 tin / 3 giây
+const SPAM_WINDOW = 3000;     // 3 giây
+const BLOCK_TIME = 20000;     // Tắt console 20 giây khi spam
 
-// ====== GHI LOG ======
+// ====== Ghi log ======
 function writeLog(data) {
   fs.appendFileSync("console_log.txt", data + "\n", "utf8");
 }
 
-// ====== TỰ CLEAR CONSOLE ======
+// ====== Auto Clear ======
 setInterval(() => {
   console.clear();
-  console.log(chalk.green("🌿 Console đã được làm mới tự động"));
+  console.log(chalk.green("🌿 Console tự làm mới"));
 }, 60000);
 
-// ====== HIỂN THỊ BẢNG KIỂU 1 ======
+// ====== Khung console ======
 function showFrame({ threadName, senderName, message, time }) {
   console.log(
     chalk.hex("#DEADED")(`\n╭──────────────────────────⭓`) + "\n" +
@@ -50,11 +50,7 @@ module.exports.handleEvent = async function({ api, event, Users }) {
   const threadData = global.data.threadData.get(threadID) || {};
   if (threadData.console === true) return;
 
-  // JSON thơ
-  const poems = require('./../../includes/datajson/poem.json');
-  const poem = poems[Math.floor(Math.random() * poems.length)].trim();
-
-  // ====== CHECK SPAM ======
+  // ====== chống spam ======
   let now = Date.now();
   if (!spamCount[threadID]) spamCount[threadID] = { count: 0, last: now };
 
@@ -64,12 +60,13 @@ module.exports.handleEvent = async function({ api, event, Users }) {
     data.count++;
     if (data.count >= SPAM_LIMIT) {
       if (!isBlocked) {
-        console.log(chalk.red(`⚠️ Console tạm tắt 20 giây (phát hiện spam)`));
+        console.log(chalk.red(`⚠️ Console đã tắt 20 giây (phát hiện spam)`));
         isBlocked = true;
+
         setTimeout(() => {
           console.log(chalk.green(`✅ Console kích hoạt lại`));
           isBlocked = false;
-        }, LOG_BLOCK_TIME);
+        }, BLOCK_TIME);
       }
       data.last = now;
       return;
@@ -82,22 +79,19 @@ module.exports.handleEvent = async function({ api, event, Users }) {
 
   if (isBlocked) return;
 
-  // ====== LẤY THÔNG TIN ======
+  // ====== lấy thông tin ======
   const threadName = global.data.threadInfo.get(threadID)?.threadName || "Không xác định";
   const senderName = await Users.getNameUser(senderID);
   const message = event.body || "Ảnh/Video hoặc ký tự đặc biệt";
   const time = moment.tz("Asia/Ho_Chi_Minh").format("HH:mm:ss DD/MM/YYYY");
 
-  // ====== HIỂN THỊ BẢNG ======
+  // ====== in bảng ======
   showFrame({ threadName, senderName, message, time });
 
-  // ====== RANDOM THƠ ======
-  console.log(chalk.cyan(`[ ${poem} ]\n`));
-
-  // ====== LƯU LOG ======
+  // ====== lưu log ======
   writeLog(`[${time}] ${threadName} - ${senderName}: ${message}`);
 };
 
 module.exports.run = async () => {
-  console.log(chalk.green("⚡ Console Module đã hoạt động!"));
+  console.log(chalk.green("⚡ Console Module đã chạy!"));
 };
