@@ -34,12 +34,12 @@ setInterval(() => {
 // ====== Khung console ======
 function showFrame({ threadName, senderName, message, time }) {
   console.log(
-    chalk.hex("#DEADED")(`\n╭──────────────────────────⭓`) + "\n" +
+    chalk.hex("#DEADED")(`\n========= WolfBot Console Log ==============`) + "\n" +
     chalk.hex("#C0FFEE")(`├─ Nhóm: ${threadName}`) + "\n" +
     chalk.hex("#FFAACC")(`├─ User: ${senderName}`) + "\n" +
     chalk.hex("#A3FF00")(`├─ Nội dung: ${message}`) + "\n" +
     chalk.hex("#FFFF00")(`├─ Time: ${time}`) + "\n" +
-    chalk.hex("#DEADED")(`╰──────────────────────────⭓\n`)
+    chalk.hex("#DEADED")(`==============================================\n`)
   );
 }
 
