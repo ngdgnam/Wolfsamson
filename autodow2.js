@@ -66,7 +66,7 @@ module.exports.handleEvent = async ({ api, event }) => {
 
     console.log("› [AUTODOWN] Detect:", url);
 
-    // ====== API DOWNLOAD (CHỈ SỬA 1 DÒNG) ======
+    // ====== API DOWNLOAD ======
     const apiURL = `https://api.lunarkrystal.site/download?url=${encodeURIComponent(url)}`;
 
     try {
